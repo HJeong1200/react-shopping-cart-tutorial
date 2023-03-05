@@ -1,3 +1,4 @@
+import { LinearProgress } from "@material-ui/core";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { Wrapper } from "./App.styles";
@@ -24,6 +25,8 @@ function App() {
 
   console.log(data);
 
+  if (isLoading) return <LinearProgress />;
+  if (error) return <div>Something went wrong...</div>;
   return <div className="App">Hello!</div>;
 }
 
