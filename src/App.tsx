@@ -1,17 +1,9 @@
-import { LinearProgress } from "@material-ui/core";
+import { Grid, LinearProgress } from "@material-ui/core";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { Wrapper } from "./App.styles";
-
-export type CartItemType = {
-  id: number;
-  category: string;
-  description: string;
-  image: string;
-  price: number;
-  title: string;
-  amount: number;
-};
+import Item from "./components/Item";
+import { CartItemType } from "./types/CartItemType";
 
 const getProducts = async (): Promise<CartItemType[]> => {
   return await (await fetch("https://fakestoreapi.com/products")).json();
@@ -25,9 +17,21 @@ function App() {
 
   console.log(data);
 
+  const handleAddToCart = (clickedItem: CartItemType) => null;
+
   if (isLoading) return <LinearProgress />;
   if (error) return <div>Something went wrong...</div>;
-  return <div className="App">Hello!</div>;
+  return (
+    <Wrapper>
+      <Grid container spacing={3}>
+        {data?.map((item) => (
+          <Grid item key={item.id} xs={12} sm={4}>
+            <Item item={item} handleAddToCart={handleAddToCart} />
+          </Grid>
+        ))}
+      </Grid>
+    </Wrapper>
+  );
 }
 
 export default App;
