@@ -35,7 +35,18 @@ function App() {
     });
   };
 
-  const handleRemoveFromCart = () => null;
+  const handleRemoveFromCart = (id: number) => {
+    setCartItems((prev) =>
+      prev.reduce((acc, item) => {
+        if (item.id === id) {
+          if (item.amount === 1) return acc;
+          return [...acc, { ...item, amount: item.amount - 1 }];
+        }
+
+        return [...acc, item];
+      }, [] as CartItemType[])
+    );
+  };
 
   const getTotalItems = (item: CartItemType[]) =>
     item.reduce((acc: number, item) => acc + item.amount, 0);
