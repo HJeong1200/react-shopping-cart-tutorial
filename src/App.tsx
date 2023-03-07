@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useQuery } from "react-query";
 import { StyledButton, Wrapper } from "./App.styles";
 import Item from "./components/Item";
+import Cart from "./components/Cart";
 import { CartItemType } from "./types/CartItemType";
 
 const getProducts = async (): Promise<CartItemType[]> => {
@@ -20,6 +21,8 @@ function App() {
 
   const handleAddToCart = (clickedItem: CartItemType) => null;
 
+  const handleRemoveFromCart = () => null;
+
   const getTotalItems = (item: CartItemType[]) =>
     item.reduce((acc: number, item) => acc + item.amount, 0);
 
@@ -28,7 +31,11 @@ function App() {
   return (
     <Wrapper>
       <Drawer anchor="right" open={cartOpen} onClose={() => setCartOpen(false)}>
-        Cart
+        <Cart
+          cartItems={cartItems}
+          addToCart={handleAddToCart}
+          removeFromCart={handleRemoveFromCart}
+        />
       </Drawer>
       <StyledButton onClick={() => setCartOpen(!cartOpen)}>
         <Badge badgeContent={getTotalItems(cartItems)} color="error">
